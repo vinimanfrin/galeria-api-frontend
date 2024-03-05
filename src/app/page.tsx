@@ -1,9 +1,11 @@
+import Template from "@/components/Template";
 
-
-export default function Home() {
+const Home = () => {
   return (
-    <main>
-      <h1>Hello World!</h1>
-    </main>
+    <Template>
+      <h1>Hello World! Essa é a Galeria</h1>
+    </Template>
   );
 }
+
+export default Home;
