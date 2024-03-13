@@ -12,10 +12,13 @@ const Home = () => {
   const [images,setImages] = useState<Image[]>([])
   const [query,setQuery] = useState<string>('')
   const [extension,setExtension] = useState<string>('')
+  const [loading,setLoading] = useState<boolean>(false)
 
   async function getImages(){
+    setLoading(true)
     const result = await useImageService().buscar(query,extension);
     setImages(result);
+    setLoading(false)
   }
 
   function renderImageCard(image: Image) {
@@ -27,7 +30,7 @@ const Home = () => {
   }
 
   return (
-    <Template>
+    <Template loading={loading}>
       <section className="flex flex-col items-center justify-center my-5">
         <div className="flex space-x-4">
           <input type="text" onChange={event => setQuery(event.target.value)} placeholder="Filtrar" className="border px-5 py-2 rounded-lg text-gray-900 shadow-lg" />
