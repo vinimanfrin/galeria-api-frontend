@@ -19,7 +19,7 @@ const Home = () => {
   }
 
   function renderImageCard(image: Image) {
-    return <ImageCard key={image.url} name={image.name} size={image.size} uploadDate={image.uploadDate} src={image.url} />
+    return <ImageCard key={image.url} name={image.name} size={image.size} uploadDate={image.uploadDate} src={image.url} extension={image.extension} />
   }
 
   function renderImages(){

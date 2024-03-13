@@ -7,6 +7,7 @@ interface ImageCardProps {
     size?: number;
     uploadDate?: string;
     src?: string;
+    extension?: string 
 }
 
 const download = (src?:string) => {
@@ -33,6 +34,7 @@ const ImageCard: React.FC<ImageCardProps> = (props: ImageCardProps) => {
                 <h5 className="text-xl font-semibold mb-2 text-gray-600">{props.name}</h5>
                 <p className="text-gray-600">Tamanho: {formatBytes(props.size,2)}</p>
                 <p className="text-gray-600">Data de Upload: {props.uploadDate}</p>
+                <p className="text-gray-600">{props.extension}</p>
 
                 <div className="flex justify-between pt-4">
                     <button onClick={() => download(props.src)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-1 rounded"><MdDownload/></button>
