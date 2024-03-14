@@ -1,5 +1,6 @@
 import React from "react";
 import iconeGaleria from "../../public/galeria-de-fotos.png"
+import Link from "next/link";
 
 interface TemplateProps {
     children: React.ReactNode;
@@ -37,10 +38,13 @@ const Loading: React.FC = () => {
 const Header: React.FC = () => {
     return (
         <header className="bg-slate-50 text-black py-3 shadow-lg">
-            <div className="container mx-auto flex items-center gap-4">
-                <h1 className="text-3xl">Galeria</h1>
-                <img src={iconeGaleria.src} alt="icone galeria" className="w-8 h-8" />
-            </div>
+            <Link href="/">
+                <div className="container mx-auto flex items-center gap-4">
+                    <h1 className="text-3xl">Galeria</h1>
+                    <img src={iconeGaleria.src} alt="icone galeria" className="w-8 h-8" />
+                </div>
+            </Link>
+            
         </header>
     )
 }

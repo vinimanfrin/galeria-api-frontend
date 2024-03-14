@@ -5,6 +5,7 @@ import ImageCard from "@/components/ImageCard";
 import { useState } from "react";
 import Image from "@/resources/image/image.resource";
 import { useImageService } from "@/resources/image/image.service";
+import Link from "next/link";
 
 
 const Home = () => {
@@ -41,7 +42,9 @@ const Home = () => {
             <option value="GIF">GIF</option>
           </select>
           <button className="rounded-full shadow-md px-4 py-2 bg-blue-500 text-white hover:bg-blue-600" onClick={getImages}>Pesquisar</button>
-          <button className="rounded-full shadow-md px-4 py-2 bg-purple-600 text-white hover:bg-purple-700">Enviar nova Imagem</button>
+          <Link href="/formulario">
+            <button className="rounded-full shadow-md px-4 py-2 bg-purple-600 text-white hover:bg-purple-700">Enviar nova Imagem</button>
+          </Link> 
         </div>
       </section>
 
