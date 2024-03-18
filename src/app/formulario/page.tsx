@@ -1,21 +1,36 @@
+'use client'
 import Template from "@/components/Template";
+import { useFormik} from "formik";
+
+interface FormProps {
+    name: string;
+    tags: string;
+    file: any
+}
+const formScheme: FormProps = {name: "", tags: "", file: ""}
 
 const Formulario = () => {
+    const formik = useFormik<FormProps>({
+        initialValues: formScheme,
+        onSubmit: (dados: FormProps) => {
+            console.log(dados)
+        }
+    })
     return (
         <Template>
             <div className="max-w-md mx-auto py-4">
-                <form className="bg-white shadow-lg rounded px-8 pt-6 pb-8 mb-4">
+                <form onSubmit={formik.handleSubmit} className="bg-white shadow-lg rounded px-8 pt-6 pb-8 mb-4">
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2" >
                             Nome
                         </label>
-                        <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" type="text" placeholder="Nome"/>
+                        <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" type="text" placeholder="Nome" onChange={formik.handleChange}/>
                     </div>
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2">
                             Tag
                         </label>
-                        <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="tag" type="text" placeholder="adicione uma tag para a imagem"/>
+                        <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="tags" type="text" placeholder="adicione uma tag para a imagem" onChange={formik.handleChange}/>
                     </div>
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2">
