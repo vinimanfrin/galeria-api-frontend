@@ -1,5 +1,6 @@
 'use client'
 import Template from "@/components/Template";
+import { useImageService } from "@/resources/image/image.service";
 import { useFormik} from "formik";
 import React, { useState } from "react";
 
@@ -13,13 +14,23 @@ const formScheme: FormProps = {name: "", tags: "", file: ""}
 const Formulario = () => {
 
     const [imagePreview, setImagePreview] = useState<string>("")
+    const service = useImageService()
 
     const formik = useFormik<FormProps>({
         initialValues: formScheme,
-        onSubmit: (dados: FormProps) => {
-            console.log(dados)
-        }
+        onSubmit: handleSubmit
     })
+
+    async function handleSubmit(dados: FormProps) {
+        const formData = new FormData();
+        formData.append("file", dados.file);
+        formData.append("name", dados.name);
+        formData.append("tags", dados.tags);       
+         
+        await service.postar(formData)
+
+        setImagePreview("")
+    }
 
     const onFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
         if(event.target.files){
