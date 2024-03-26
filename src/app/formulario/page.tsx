@@ -1,7 +1,7 @@
 'use client'
 import Template from "@/components/Template";
 import { useImageService } from "@/resources/image/image.service";
-import { useFormik} from "formik";
+import { Form, useFormik} from "formik";
 import React, { useState } from "react";
 
 interface FormProps {
@@ -14,6 +14,7 @@ const formScheme: FormProps = {name: "", tags: "", file: ""}
 const Formulario = () => {
 
     const [imagePreview, setImagePreview] = useState<string>("")
+    const [loading, setLoading] = useState<boolean>(false)
     const service = useImageService()
 
     const formik = useFormik<FormProps>({
@@ -22,6 +23,7 @@ const Formulario = () => {
     })
 
     async function handleSubmit(dados: FormProps) {
+        setLoading(true)
         const formData = new FormData();
         formData.append("file", dados.file);
         formData.append("name", dados.name);
@@ -29,7 +31,9 @@ const Formulario = () => {
          
         await service.postar(formData)
 
+        formik.resetForm()
         setImagePreview("")
+        setLoading(false)
     }
 
     const onFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,20 +46,20 @@ const Formulario = () => {
     }
 
     return (
-        <Template>
+        <Template loading={loading}>
             <div className="max-w-md mx-auto py-4">
                 <form onSubmit={formik.handleSubmit} className="bg-white shadow-lg rounded px-8 pt-6 pb-8 mb-4">
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2" >
                             Nome
                         </label>
-                        <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" type="text" placeholder="Nome" onChange={formik.handleChange}/>
+                        <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" type="text" placeholder="Nome" onChange={formik.handleChange} value={formik.values.name}/>
                     </div>
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2">
                             Tag
                         </label>
-                        <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="tags" type="text" placeholder="adicione uma tag para a imagem" onChange={formik.handleChange}/>
+                        <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="tags" type="text" placeholder="adicione uma tag para a imagem" onChange={formik.handleChange} value={formik.values.tags}/>
                     </div>
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2">
