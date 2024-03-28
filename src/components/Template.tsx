@@ -1,6 +1,7 @@
 import React from "react";
 import iconeGaleria from "../../public/galeria-de-fotos.png"
 import Link from "next/link";
+import { ToastContainer } from "react-toastify";
 
 interface TemplateProps {
     children: React.ReactNode;
@@ -21,7 +22,14 @@ const Template: React.FC<TemplateProps> = ({children, loading}: TemplateProps) =
                 </div>
                 {children}
             </div>
-            
+            <ToastContainer 
+                position="top-right"
+                autoClose={8000}
+                hideProgressBar={false}
+                draggable={false}
+                closeOnClick={true}
+                pauseOnHover={true}
+            />
         </>
     )
 }

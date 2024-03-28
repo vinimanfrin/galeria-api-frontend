@@ -1,4 +1,5 @@
 import Image from "./image.resource";
+import { useNotification } from "@/components/Notification";
 
 class ImageService {
     baseURL: string = "http://localhost:8080/image";
@@ -10,10 +11,16 @@ class ImageService {
     }
 
     async postar(dados : FormData) : Promise<string> {
+        const notification = useNotification();
         const response = await fetch(this.baseURL, {
             method: 'POST',
             body: dados
         })
+
+        if(response.status === 201){
+            notification.notify("Imagem cadastrada com sucesso!", "success")
+        }
+        
         return response.headers.get("location") ?? ''
     }
 }

@@ -6,10 +6,11 @@ import { useState } from "react";
 import Image from "@/resources/image/image.resource";
 import { useImageService } from "@/resources/image/image.service";
 import Link from "next/link";
-
+import { useNotification } from "@/components/Notification";
 
 const Home = () => {
-
+  const service = useImageService();
+  const notification = useNotification();
   const [images,setImages] = useState<Image[]>([])
   const [query,setQuery] = useState<string>('')
   const [extension,setExtension] = useState<string>('')
@@ -17,9 +18,11 @@ const Home = () => {
 
   async function getImages(){
     setLoading(true)
-    const result = await useImageService().buscar(query,extension);
+    const result = await service.buscar(query,extension);
     setImages(result);
     setLoading(false)
+
+    if(!result.length) notification.notify("Nenhuma imagem encontrada", "warning")
   }
 
   function renderImageCard(image: Image) {
