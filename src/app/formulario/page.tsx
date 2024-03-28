@@ -3,13 +3,7 @@ import Template from "@/components/Template";
 import { useImageService } from "@/resources/image/image.service";
 import { Form, useFormik} from "formik";
 import React, { useState } from "react";
-
-interface FormProps {
-    name: string;
-    tags: string;
-    file: any
-}
-const formScheme: FormProps = {name: "", tags: "", file: ""}
+import {formScheme, FormProps, formSchemeValidation} from "./FormSchema";
 
 const Formulario = () => {
 
@@ -19,7 +13,8 @@ const Formulario = () => {
 
     const formik = useFormik<FormProps>({
         initialValues: formScheme,
-        onSubmit: handleSubmit
+        onSubmit: handleSubmit,
+        validationSchema: formSchemeValidation
     })
 
     async function handleSubmit(dados: FormProps) {
@@ -54,17 +49,21 @@ const Formulario = () => {
                             Nome
                         </label>
                         <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" type="text" placeholder="Nome" onChange={formik.handleChange} value={formik.values.name}/>
+                        <span className="text-red-500">{formik.errors.name}</span>
                     </div>
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2">
                             Tag
                         </label>
                         <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="tags" type="text" placeholder="adicione uma tag para a imagem" onChange={formik.handleChange} value={formik.values.tags}/>
+                        <span className="text-red-500">{formik.errors.tags}</span>
                     </div>
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2">
                             Imagem
+                            
                         </label>
+                        <span className="block text-red-500">{formik.errors.file}</span>
                         <div className="flex items-center border-b border-b-2 border-gray-500 py-2">
                             <input onChange={onFileUpload} className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" type="file" placeholder="Upload de imagem" aria-label="Image"/>
                             
